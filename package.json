@@ -22,5 +22,9 @@
     "closure",
     "soy",
     "parser"
-  ]
+  ],
+  "dependencies": {
+    "merge": "^1.2.0",
+    "tunic": "^0.3.0"
+  }
 }

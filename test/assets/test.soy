@@ -1,0 +1,30 @@
+{namespace My.Namespace}
+
+/**
+ * @param firstName
+ */
+{template .hello}
+	{@param lastName: string /}
+	Hello {$firstName} {$lastName}!
+{/template}
+
+/**
+ */
+{template .age}
+	{@param age: number /}
+	Your age: {$age}.
+{/template}
+
+/**
+ * @param id
+ */
+{deltemplate Del}
+	My id is {$id}.
+{/deltemplate}
+
+/**
+ * @param id
+ */
+{deltemplate Del variant="'negation'"}
+	My id is not {$id}.
+{/deltemplate}
