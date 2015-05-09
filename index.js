@@ -72,7 +72,7 @@ function soyparser(text) {
     namespace: extractNamespace(text),
     templates: []
   };
-  var ast = tunic().parse(text);
+  var ast = new Tunic().parse(text);
   ast.blocks.forEach(extractTemplates.bind(null, parsed.templates, ast.blocks));
   return parsed;
 };
