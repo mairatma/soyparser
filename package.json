@@ -1,6 +1,6 @@
 {
   "name": "soyparser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A parser for Closure Templates (or Soy Templates).",
   "license": "MIT",
   "repository": "mairatma/soyparser",
