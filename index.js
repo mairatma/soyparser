@@ -1,5 +1,5 @@
 var merge = require('merge');
-var tunic = require('tunic');
+var Tunic = require('tunic');
 
 function extractNamespace(text) {
   return /{namespace (.*)}/.exec(text)[1];
