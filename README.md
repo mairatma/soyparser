@@ -16,7 +16,7 @@ For example, say you want to parse the following soy file:
 /**
  * @param firstName
  */
-{template .hello}
+{template .hello private="true"}
 	{@param lastName: string /}
 	Hello {$firstName} {$lastName}!
 {/template}
@@ -64,7 +64,10 @@ The return value of the soyparser function is a JSON object with the parsed info
 					type: 'any'
 				}
 			],
-			name: 'hello'
+			name: 'hello',
+			attributes: {
+				private: 'true'
+			}
 		},
 		{
 			contents: '{deltemplate Del variant="\'negation\'"}\n\tMy id is not {$id}.\n{/deltemplate}',
@@ -84,7 +87,9 @@ The return value of the soyparser function is a JSON object with the parsed info
 			],
 			deltemplate: true,
 			name: 'Del',
-			variant: 'negation'
+			attributes: {
+				variant: '\'negation\''
+			}
     	}
     ]
 }
