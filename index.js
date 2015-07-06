@@ -13,25 +13,32 @@ function extractParams(text) {
     params.push({
       name: currentMatch[1],
       type: currentMatch[2]
-    })
+    });
     currentMatch = paramRegex.exec(text);
   }
   return params;
 }
 
+function extractTemplateAttributes(text) {
+  text = text || '';
+  var attrs = {};
+  var attrTexts = text.trim().split(/\s+/);
+  attrTexts.forEach(function(attrText) {
+    var split = attrText.split('=');
+    if (split.length === 2) {
+      attrs[split[0]] = split[1].substr(1, split[1].length - 2);
+    }
+  });
+  return attrs;
+}
+
 function extractTemplateInfo(text) {
   var info = {};
-  var match = /{template (.*)}/.exec(text);
-  if (match){
-    info.name = match[1].substr(1);
-  } else {
-    var regex = new RegExp('{deltemplate (\\S+)\\s*(variant="\'(\\w+)\'")?\\s*}');
-    match = regex.exec(text);
-    if (match) {
-      info.deltemplate = true;
-      info.name = match[1];
-      info.variant = match[3];
-    }
+  var match = /{(template|deltemplate) (\S+)(.*)?}/.exec(text);
+  if (match) {
+    info.deltemplate = match[1] === 'deltemplate';
+    info.name = info.deltemplate ? match[2] : match[2].substr(1);
+    info.attributes = extractTemplateAttributes(match[3]);
   }
   return info;
 }
@@ -75,7 +82,7 @@ function soyparser(text) {
   var ast = new Tunic().parse(text);
   ast.blocks.forEach(extractTemplates.bind(null, parsed.templates, ast.blocks));
   return parsed;
-};
+}
 
 module.exports = soyparser;
 

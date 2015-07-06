@@ -27,6 +27,15 @@ module.exports = {
     test.done();
   },
 
+  testTemplateAttributes: function(test) {
+    var parsed = soyparser(testSoyContents);
+    assert.strictEqual(0, Object.keys(parsed.templates[0].attributes).length);
+    assert.strictEqual(2, Object.keys(parsed.templates[1].attributes).length);
+    assert.strictEqual('true', parsed.templates[1].attributes.private);
+    assert.strictEqual('false', parsed.templates[1].attributes.autoescape);
+    test.done();
+  },
+
   testDelTemplates: function(test) {
     var parsed = soyparser(testSoyContents);
     assert.ok(!parsed.templates[0].deltemplate);
@@ -41,7 +50,7 @@ module.exports = {
     assert.ok(!parsed.templates[0].variant);
     assert.ok(!parsed.templates[1].variant);
     assert.ok(!parsed.templates[2].variant);
-    assert.strictEqual('negation', parsed.templates[3].variant);
+    assert.strictEqual('\'negation\'', parsed.templates[3].attributes.variant);
     test.done();
   },
 
