@@ -58,7 +58,7 @@ module.exports = {
 
   testDocTags: function(test) {
     var parsed = soyparser(testSoyContents);
-    assert.strictEqual(1, parsed.templates[0].docTags.length);
+    assert.strictEqual(2, parsed.templates[0].docTags.length);
     assert.strictEqual(0, parsed.templates[1].docTags.length);
     assert.strictEqual(1, parsed.templates[2].docTags.length);
     assert.strictEqual(1, parsed.templates[3].docTags.length);
@@ -83,7 +83,7 @@ module.exports = {
 
   testParams: function(test) {
     var parsed = soyparser(testSoyContents);
-    assert.strictEqual(2, parsed.templates[0].params.length);
+    assert.strictEqual(3, parsed.templates[0].params.length);
     assert.strictEqual(1, parsed.templates[1].params.length);
     assert.strictEqual(1, parsed.templates[2].params.length);
     assert.strictEqual(1, parsed.templates[3].params.length);
@@ -94,9 +94,21 @@ module.exports = {
     var parsed = soyparser(testSoyContents);
     assert.strictEqual('lastName', parsed.templates[0].params[0].name);
     assert.strictEqual('firstName', parsed.templates[0].params[1].name);
+    assert.strictEqual('title', parsed.templates[0].params[2].name);
     assert.strictEqual('age', parsed.templates[1].params[0].name);
     assert.strictEqual('id', parsed.templates[2].params[0].name);
     assert.strictEqual('id', parsed.templates[3].params[0].name);
+    test.done();
+  },
+
+  testParamOptional: function(test) {
+    var parsed = soyparser(testSoyContents);
+    assert.ok(!parsed.templates[0].params[0].optional);
+    assert.ok(!parsed.templates[0].params[1].optional);
+    assert.ok(parsed.templates[0].params[2].optional);
+    assert.ok(!parsed.templates[1].params[0].optional);
+    assert.ok(!parsed.templates[2].params[0].optional);
+    assert.ok(!parsed.templates[3].params[0].optional);
     test.done();
   },
 

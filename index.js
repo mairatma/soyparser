@@ -64,9 +64,10 @@ function extractTemplates(templates, block) {
 function getAllParams(extractedParams, docTags) {
   var params = extractedParams.concat();
   docTags.forEach(function(tag) {
-    if (tag.tag === 'param') {
+    if (tag.tag === 'param' || tag.tag === 'param?') {
       params.push({
         name: tag.name,
+        optional: tag.tag === 'param?',
         type: 'any'
       });
     }
@@ -79,7 +80,10 @@ function soyparser(text) {
     namespace: extractNamespace(text),
     templates: []
   };
-  var ast = new Tunic().parse(text);
+  var ast = new Tunic({
+    namedTags: ['param', 'param?'],
+    tagParse: /^([\w|?]+)[\t \-]*(?:\{([^\}]+)\})?[\t \-]*(\[[^\]]*\]\*?|\S*)?[\t ]*(-?)[\t ]*([\s\S]+)?$/m,
+  }).parse(text);
   ast.body.forEach(extractTemplates.bind(null, parsed.templates));
   return parsed;
 }
