@@ -16,6 +16,7 @@
     "index.js"
   ],
   "scripts": {
+    "lint": "jshint test/test.js index.js",
     "test": "nodeunit test/test.js"
   },
   "keywords": [
@@ -26,5 +27,8 @@
   "dependencies": {
     "merge": "^1.2.0",
     "tunic": "^1.0.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0"
   }
 }

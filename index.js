@@ -1,3 +1,5 @@
+'use strict';
+
 var merge = require('merge');
 var Tunic = require('tunic');
 
@@ -35,7 +37,7 @@ function extractTemplateAttributes(text) {
 function extractTemplateInfo(text) {
   var match = /{(template|deltemplate) (\S+)(.*)?}/.exec(text);
   if (match) {
-    var deltemplate = match[1] === 'deltemplate'
+    var deltemplate = match[1] === 'deltemplate';
     return {
       deltemplate: deltemplate,
       name: deltemplate ? match[2] : match[2].substr(1),
