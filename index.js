@@ -33,31 +33,29 @@ function extractTemplateAttributes(text) {
 }
 
 function extractTemplateInfo(text) {
-  var info = {};
   var match = /{(template|deltemplate) (\S+)(.*)?}/.exec(text);
   if (match) {
-    info.deltemplate = match[1] === 'deltemplate';
-    info.name = info.deltemplate ? match[2] : match[2].substr(1);
-    info.attributes = extractTemplateAttributes(match[3]);
+    var deltemplate = match[1] === 'deltemplate'
+    return {
+      deltemplate: deltemplate,
+      name: deltemplate ? match[2] : match[2].substr(1),
+      attributes: extractTemplateAttributes(match[3])
+    };
   }
-  return info;
 }
 
-function extractTemplates(templates, blocks, block, index) {
-  var code = blocks[index + 1];
-  if (block.type === 'Comment' && code && code.type === 'Code') {
-    var templateInfo = extractTemplateInfo(code.contents);
-    if (templateInfo) {
-      var info = merge(
-        {
-          contents: code.contents,
-          docTags: block.tags,
-          params: getAllParams(extractParams(code.contents), block.tags)
-        },
-        templateInfo
-      );
-      templates.push(info);
-    }
+function extractTemplates(templates, block) {
+  var templateInfo = extractTemplateInfo(block.trailingCode);
+  if (templateInfo) {
+    var info = merge(
+      {
+        contents: block.trailingCode,
+        docTags: block.tags,
+        params: getAllParams(extractParams(block.trailingCode), block.tags)
+      },
+      templateInfo
+    );
+    templates.push(info);
   }
 }
 
@@ -80,7 +78,7 @@ function soyparser(text) {
     templates: []
   };
   var ast = new Tunic().parse(text);
-  ast.blocks.forEach(extractTemplates.bind(null, parsed.templates, ast.blocks));
+  ast.body.forEach(extractTemplates.bind(null, parsed.templates));
   return parsed;
 }
 

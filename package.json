@@ -25,6 +25,6 @@
   ],
   "dependencies": {
     "merge": "^1.2.0",
-    "tunic": "^0.4.0"
+    "tunic": "^1.0.0"
   }
 }
