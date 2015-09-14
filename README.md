@@ -15,10 +15,11 @@ For example, say you want to parse the following soy file:
 
 /**
  * @param firstName
+ * @param? title
  */
 {template .hello private="true"}
 	{@param lastName: string /}
-	Hello {$firstName} {$lastName}!
+	Hello{$title ? ' ' + $title : ''} {$firstName} {$lastName}!
 {/template}
 
 /**
@@ -46,11 +47,17 @@ The return value of the soyparser function is a JSON object with the parsed info
 	templates: [
 		{
 			contents: '{template .hello}\n\t{@param lastName: string /}\n\tHello {$firstName} {$lastName}!\n{/template}',
-			docTags: [
+			docTags:[
 				{
 					tag: 'param',
 					type: undefined,
 					name: 'firstName',
+					description: undefined
+				},
+				{
+					tag: 'param?',
+					type: undefined,
+					name: 'title',
 					description: undefined
 				}
 			],
@@ -61,6 +68,11 @@ The return value of the soyparser function is a JSON object with the parsed info
 				},
   				{
 					name: 'firstName',
+					type: 'any'
+				},
+				{
+					name: 'title',
+					optional: true,
 					type: 'any'
 				}
 			],
