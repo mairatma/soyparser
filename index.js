@@ -9,7 +9,7 @@ function extractNamespace(text) {
 
 function extractParams(text) {
   var params = [];
-  var paramRegex = /{@param \s*(\S*)\s*:\s*(\S*)\s*\/}/g;
+  var paramRegex = /{@param \s*(\S*)\s*:\s*(\S*)\s*\/?}/g;
   var currentMatch = paramRegex.exec(text);
   while (currentMatch) {
     params.push({
@@ -89,4 +89,3 @@ function soyparser(text) {
 }
 
 module.exports = soyparser;
-
