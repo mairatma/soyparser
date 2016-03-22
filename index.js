@@ -9,12 +9,13 @@ function extractNamespace(text) {
 
 function extractParams(text) {
   var params = [];
-  var paramRegex = /{@param \s*(\S*)\s*:\s*(\S*)\s*\/?}/g;
+  var paramRegex = /{@param(\??) \s*(\S*)\s*:\s*(\S*)\s*\/?}/g;
   var currentMatch = paramRegex.exec(text);
   while (currentMatch) {
     params.push({
-      name: currentMatch[1],
-      type: currentMatch[2]
+      name: currentMatch[2],
+      optional: !!currentMatch[1],
+      type: currentMatch[3]
     });
     currentMatch = paramRegex.exec(text);
   }

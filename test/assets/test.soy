@@ -2,10 +2,10 @@
 
 /**
  * @param firstName
- * @param? title
  */
 {template .hello}
 	{@param lastName: string /}
+	{@param? title: string /}
 	Hello{$title ? ' ' + $title : ''} {$firstName} {$lastName}!
 {/template}
 
