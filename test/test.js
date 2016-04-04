@@ -14,6 +14,13 @@ module.exports = {
     test.done();
   },
 
+  testMissingNamespace: function(test) {
+    assert.throws(function() {
+      soyparser('');
+    });
+    test.done();
+  },
+
   testTemplateCount: function(test) {
     var parsed = soyparser(testSoyContents);
     assert.strictEqual(4, parsed.templates.length);

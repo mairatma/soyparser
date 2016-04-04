@@ -4,7 +4,11 @@ var merge = require('merge');
 var Tunic = require('tunic');
 
 function extractNamespace(text) {
-  return /{namespace (.*)}/.exec(text)[1];
+  var match = /{namespace (.*)}/.exec(text);
+  if (!match) {
+    throw new Error('Invalid soy. No namespace declared.');
+  }
+  return match[1];
 }
 
 function extractParams(text) {
