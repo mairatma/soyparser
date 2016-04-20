@@ -122,7 +122,7 @@ module.exports = {
   testParamTypes: function(test) {
     var parsed = soyparser(testSoyContents);
     assert.strictEqual('string', parsed.templates[0].params[0].type);
-    assert.strictEqual('string', parsed.templates[0].params[1].type);
+    assert.strictEqual('string|html', parsed.templates[0].params[1].type);
     assert.strictEqual('any', parsed.templates[0].params[2].type);
     assert.strictEqual('number', parsed.templates[1].params[0].type);
     assert.strictEqual('any', parsed.templates[2].params[0].type);

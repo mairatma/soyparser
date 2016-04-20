@@ -5,7 +5,7 @@
  */
 {template .hello}
 	{@param lastName: string /}
-	{@param? title: string /}
+	{@param? title: string|html /}
 	Hello{$title ? ' ' + $title : ''} {$firstName} {$lastName}!
 {/template}
 
